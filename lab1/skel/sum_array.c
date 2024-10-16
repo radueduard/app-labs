@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <omp.h>
+
 #define SIZE 10000
 
 int main() {
@@ -12,12 +14,14 @@ int main() {
         a[i] = i;
     }
 
+    double t1 = omp_get_wtime();
     #pragma omp parallel for reduction(+:sum) private(i)
     for (i = 0; i < SIZE; i++) {
         sum += a[i];
     }
+    double t2 = omp_get_wtime();
 
-    printf("Total sum = %ld\n", sum);
+    printf("Total sum = %ld in %lf\n", sum, t2 - t1);
 
     return 0;
 }
