@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE 100
+#define SIZE 10000
 
 int main() {
 
@@ -12,6 +12,7 @@ int main() {
         a[i] = i;
     }
 
+    #pragma omp parallel for reduction(+:sum) private(i)
     for (i = 0; i < SIZE; i++) {
         sum += a[i];
     }
